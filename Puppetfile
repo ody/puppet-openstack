@@ -11,3 +11,4 @@ mod 'rabbitmq',     :git => 'https://github.com/puppetlabs/puppetlabs-rabbitmq.g
 mod 'mysql',        :git => 'https://github.com/puppetlabs/puppetlabs-mysql.git'
 mod 'sysctl',       :git => 'https://github.com/duritong/puppet-sysctl.git'
 mod 'rdo',          :git => 'https://github.com/richardraseley/puppet-rdo.git'
+mod 'epel',         :git => 'https://github.com/stahnma/puppet-module-epel.git'
