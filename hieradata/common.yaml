@@ -1,0 +1,5 @@
+---
+profile::keystone::admin_token: 'JnfvK7AjFdwGwAKyxKLr4BgHxEpD'
+profile::rabbitmq::passwd: 'oiqvuBqZY7BTUNozrDDg4MjUDekz'
+profile::mysql::passwd: 'TctfUYJuLkorcs9mWL4NTPtGGeHL'
+profile::keystone::passwd: 'ezxMTZZiqUBWBbdjaW3sqAvHUFs7'

@@ -10,3 +10,4 @@ mod 'stdlib',       :git => 'https://github.com/puppetlabs/puppetlabs-inifile.gi
 mod 'rabbitmq',     :git => 'https://github.com/puppetlabs/puppetlabs-rabbitmq.git'
 mod 'mysql',        :git => 'https://github.com/puppetlabs/puppetlabs-mysql.git'
 mod 'sysctl',       :git => 'https://github.com/duritong/puppet-sysctl.git'
+mod 'rdo',          :git => 'https://github.com/richardraseley/puppet-rdo.git'
