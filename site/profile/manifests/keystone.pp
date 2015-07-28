@@ -26,44 +26,9 @@ class profile::keystone(
     default_domain => 'admin',
   }
 
-  keystone_domain { 'admin':
-    ensure      => present,
-    enabled     => true,
-    description => 'Domain for v3 admin users',
-  }
-
-  keystone_domain { 'services':
-    ensure      => present,
-    enabled     => true,
-    description => 'Domain for v3 service users',
-  }
-
-  keystone_tenant { 'services':
-    ensure      => present,
-    enabled     => true,
-    description => 'Tenant for the openstack services',
-    domain      => 'services',
-  }
-
-  keystone_tenant { 'openstack':
-    ensure      => present,
-    enabled     => true,
-    description => 'admin tenant',
-    domain      => 'admin',
-  }
-
-  keystone_user { 'admin':
-    ensure   => present,
-    enabled  => true,
-    tenant   => 'openstack',
+  class { '::keystone::roles::admin':
     email    => 'admin@example.com',
     password => $passwd,
-    domain   => 'admin',
-  }
-
-  keystone_user_role { 'admin@openstack':
-    ensure => present,
-    roles  => ['admin'],
   }
 
   class {
@@ -72,14 +37,14 @@ class profile::keystone(
       region   => 'us-test-1',
     ;
     '::nova::keystone::auth':
-      public_url_v3   => "http://${facts['networking']['ip']}:8774/v3",
-      admin_url_v3    => "http://${facts['networking']['ip']}:8774/v3",
-      internal_url_v3 => "http://${facts['networking']['interfaces']['ens33']['ip']}:8774/v3",
+      public_url   => "http://${facts['networking']['ip']}:8774/v2/%(tenant_id)s",
+      admin_url    => "http://${facts['networking']['ip']}:8774/v2/%(tenant_id)s",
+      internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:8774/v2/%(tenant_id)s",
     ;
     '::glance::keystone::auth':
-      public_url_v3   => "http://${facts['networking']['ip']}:9292/v3",
-      admin_url_v3    => "http://${facts['networking']['ip']}:9292/v3",
-      internal_url_v3 => "http://${facts['networking']['interfaces']['ens33']['ip']}:9292/v3",
+      public_url   => "http://${facts['networking']['ip']}:9292",
+      admin_url    => "http://${facts['networking']['ip']}:9292",
+      internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:9292",
     ;
   }
 
