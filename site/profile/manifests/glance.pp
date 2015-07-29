@@ -7,7 +7,6 @@ class profile::glance {
 
   include('::glance')
   include('::glance::client')
-  include('::glance::backend::file')
 
   class { '::glance::api':
     database_connection => "mysql://glance:${db_passwd}@127.0.0.1/glance",
@@ -18,4 +17,6 @@ class profile::glance {
     database_connection => "mysql://glance:${db_passwd}@127.0.0.1/glance",
     keystone_password   => $ks_passwd,
   }
+
+  include('::glance::backend::file')
 }
