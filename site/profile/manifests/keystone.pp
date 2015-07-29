@@ -11,6 +11,7 @@ class profile::keystone(
   class { '::openstack_extras::auth_file':
     password    => $passwd,
     region_name => 'us-test-1',
+    auth_url    => 'http://127.0.0.1:5000/v3/',
   }
 
   class { '::keystone':
