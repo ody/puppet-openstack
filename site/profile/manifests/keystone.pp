@@ -8,8 +8,10 @@ class profile::keystone(
   $rabbit_passwd = hiera('profile::rabbitmq::passwd')
   $db_passwd     = hiera('profile::mysql::passwd')
 
-  include('::keystone::client')
-  include('::keystone::cron::token_flush')
+  class { '::openstack_extras::auth_file':
+    password    => $passwd,
+    region_name => 'us-test-1',
+  }
 
   class { '::keystone':
     database_connection => "mysql://keystone:${db_passwd}@127.0.0.1/keystone",
@@ -17,6 +19,9 @@ class profile::keystone(
     rabbit_password     => $rabbit_passwd,
     rabbit_userid       => 'keystone',
   }
+
+  include('::keystone::client')
+  include('::keystone::cron::token_flush')
 
   class { '::keystone::endpoint':
     public_url     => "http://${facts['networking']['ip']}:5000",
