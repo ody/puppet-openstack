@@ -1,5 +1,6 @@
 mod 'keystone',     :git => 'https://github.com/openstack/puppet-keystone.git'
 mod 'nova',         :git => 'https://github.com/openstack/puppet-nova.git'
+mod 'cinder',       :git => 'https://github.com/openstack/puppet-cinder.git'
 mod 'glance',       :git => 'https://github.com/openstack/puppet-glance.git'
 mod 'neutron',      :git => 'https://github.com/openstack/puppet-neutron.git'
 mod 'openstacklib', :git => 'https://github.com/openstack/puppet-openstacklib.git'
