@@ -3,5 +3,7 @@
 class profile::common {
 
   include('::epel')
-  include('::rdo::kilo')
+  class { '::openstack_extras::repo::redhat::redhat':
+    manage_epel => false,
+  }
 }
