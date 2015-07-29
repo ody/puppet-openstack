@@ -2,7 +2,10 @@
 #
 class profile::rabbitmq($passwd) {
 
-  class { '::rabbitmq': delete_guest_user => true, }
+  class { '::rabbitmq':
+    delete_guest_user => true,
+    package_provider  => 'yum',
+  }
 
   rabbitmq_vhost { '/':
     provider => 'rabbitmqctl',
