@@ -12,14 +12,14 @@ class profile::rabbitmq($passwd) {
     require  => Class['rabbitmq'],
   }
 
-  rabbitmq_user { ['nova', 'keystone']:
+  rabbitmq_user { ['nova', 'keystone', 'neutron']:
     admin    => true,
     password => $passwd,
     provider => 'rabbitmqctl',
     require  => Class['rabbitmq'],
   }
 
-  rabbitmq_user_permissions { ['nova@/', 'keystone@/']:
+  rabbitmq_user_permissions { ['nova@/', 'keystone@/', 'neutron@/']:
     configure_permission => '.*',
     write_permission     => '.*',
     read_permission      => '.*',

@@ -52,6 +52,11 @@ class profile::keystone(
       admin_url    => "http://${facts['networking']['ip']}:9292",
       internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:9292",
     ;
+    '::neutron::keystone::auth':
+      public_url   => "http://${facts['networking']['ip']}:9696",
+      admin_url    => "http://${facts['networking']['ip']}:9696",
+      internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:9696",
+    ;
   }
 
 }

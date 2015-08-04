@@ -8,7 +8,10 @@ class profile::mysql($passwd) {
     default:
       password => $passwd,
     ;
-    [ '::glance::db::mysql', '::keystone::db::mysql', '::nova::db::mysql' ]:
+    [
+      '::glance::db::mysql', '::keystone::db::mysql',
+      '::nova::db::mysql', '::neutron::db::mysql'
+    ]:
     ;
   }
 }

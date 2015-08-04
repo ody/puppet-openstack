@@ -16,4 +16,15 @@ class profile::nova::compute {
     migration_support => true,
     vncserver_listen  => '0.0.0.0',
   }
+
+  class { '::neutron':
+    allow_overlapping_ips => true,
+    rabbit_password       => $rabbit_passwd,
+    rabbit_user           => 'neutron',
+  }
+
+  class { '::neutron::agents::ml2::ovs':
+    local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
+    enable_tunneling => true,
+  }
 }
