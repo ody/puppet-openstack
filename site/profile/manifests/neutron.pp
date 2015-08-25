@@ -21,8 +21,11 @@ class profile::neutron {
   }
 
   class { '::neutron::server::notifications':
-    nova_admin_password => $nova_passwd,
-    nova_region_name    => 'us-test-1',
+    nova_admin_password    => 'ezxMTZZiqUBWBbdjaW3sqAvHUFs7',
+    nova_region_name       => 'us-test-1',
+    nova_admin_auth_url    => "http://${facts['networking']['ip']}:5000/v2.0",
+    nova_admin_tenant_name => 'openstack',
+    nova_admin_username    => 'admin',
   }
 
   class { '::neutron::agents::dhcp': }
@@ -38,6 +41,6 @@ class profile::neutron {
     tenant_network_types => ['vxlan'],
     vxlan_group          => '239.1.1.1',
     mechanism_drivers    => ['openvswitch'],
-    vni_ranges           => ['0:300']
+    vni_ranges           => ['0:300'],
   }
 }
