@@ -14,8 +14,10 @@ class profile::neutron {
   }
 
   class { '::neutron::server':
-    keystone_password => $keystone_passwd,
-    connection        => "mysql://neutron:${db_passwd}@127.0.0.1/neutron",
+    database_connection => "mysql://neutron:${db_passwd}@127.0.0.1/neutron",
+    auth_password       => $keystone_passwd,
+    identity_uri        => "http://${facts['networking']['ip']}:35357",
+    sync_db             => true,
   }
 
   class { '::neutron::server::notifications':
