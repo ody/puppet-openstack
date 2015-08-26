@@ -10,10 +10,11 @@ class role::openstack::controller {
     'profile::glance',
     'profile::nova',
     'profile::neutron',
-    'profile::puppet::db'
+    'profile::puppet',
+    'profile::puppet::db',
   ])
 
-  Class['profile::puppet::db'] -> Class['profile::common'] ->
+  Class[['profile::puppet', 'profile::puppet::db']] -> Class['profile::common'] ->
   Class[['profile::mysql', 'profile::rabbitmq']] ->
   Class['profile::keystone'] -> Class[['profile::glance', 'profile::nova', 'profile::neutron']]
 }
