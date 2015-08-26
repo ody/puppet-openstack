@@ -7,6 +7,7 @@ class profile::nova::compute {
   class { '::nova':
     rabbit_userid   => 'nova',
     rabbit_password => $rabbit_passwd,
+    rabbit_host     => 'megacon1.localdomain',
     image_service   => 'nova.image.glance.GlanceImageService',
   }
 
