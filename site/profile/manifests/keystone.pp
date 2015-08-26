@@ -58,5 +58,4 @@ class profile::keystone(
       internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:9696",
     ;
   }
-
 }

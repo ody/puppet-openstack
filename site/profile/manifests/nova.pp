@@ -16,7 +16,7 @@ class profile::nova {
   class { '::nova::api':
     admin_password => $keystone_passwd,
     auth_uri       => "http://${facts['networking']['ip']}:5000",
-    identity_uri   => "http://${facts['networking']['ip']}:35358",
+    identity_uri   => "http://${facts['networking']['ip']}:35357",
     osapi_v3       => false,
   }
 
