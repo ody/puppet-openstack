@@ -2,7 +2,7 @@
 #
 class profile::nova::compute {
 
-  $rabbit_passwd = heira('profile::rabbitmq::passwd')
+  $rabbit_passwd = hiera('profile::rabbitmq::passwd')
 
   class { '::nova':
     rabbit_userid   => 'nova',
@@ -15,16 +15,5 @@ class profile::nova::compute {
   class { '::nova::compute::libvirt':
     migration_support => true,
     vncserver_listen  => '0.0.0.0',
-  }
-
-  class { '::neutron':
-    allow_overlapping_ips => true,
-    rabbit_password       => $rabbit_passwd,
-    rabbit_user           => 'neutron',
-  }
-
-  class { '::neutron::agents::ml2::ovs':
-    local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
-    enable_tunneling => true,
   }
 }
