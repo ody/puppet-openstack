@@ -37,6 +37,7 @@ class profile::neutron {
     enable_tunneling => true,
     local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
     tunnel_types     => ['vxlan'],
+    bridge_mappings  => ['external:br-ex'],
   }
   class { '::neutron::plugins::ml2':
     type_drivers         => ['vxlan'],
