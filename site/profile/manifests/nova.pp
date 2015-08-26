@@ -1,9 +1,10 @@
 ##
 #
-class profile::nova($passwd) {
+class profile::nova {
 
-  $rabbit_passwd = hiera('profile::rabbitmq::passwd')
-  $db_passwd     = hiera('profile::mysql::passwd')
+  $rabbit_passwd   = hiera('profile::rabbitmq::passwd')
+  $db_passwd       = hiera('profile::mysql::passwd')
+  $keystone_passwd = hiera('profile::keystone::passwd')
 
   class { '::nova':
     database_connection => "mysql://nova:${db_passwd}@127.0.0.1/nova?charset=utf8",
@@ -13,10 +14,10 @@ class profile::nova($passwd) {
   }
 
   class { '::nova::api':
-    admin_password => $passwd,
+    admin_password => $keystone_passwd,
     auth_uri       => "http://${facts['networking']['ip']}:5000",
     identity_uri   => "http://${facts['networking']['ip']}:35358",
-    osapi_v3       => true,
+    osapi_v3       => false,
   }
 
   include('::nova::cert')
