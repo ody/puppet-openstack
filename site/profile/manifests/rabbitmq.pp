@@ -7,6 +7,12 @@ class profile::rabbitmq($passwd) {
     package_provider  => 'yum',
   }
 
+  firewall { '100 allow rabbitmq access':
+    dport  => ['5672'],
+    proto  => tcp,
+    action => accept,
+  }
+
   rabbitmq_vhost { '/':
     provider => 'rabbitmqctl',
     require  => Class['rabbitmq'],
