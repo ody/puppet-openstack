@@ -4,13 +4,18 @@ class profile::neutron {
 
   $rabbit_passwd   = hiera('profile::rabbitmq::passwd')
   $db_passwd       = hiera('profile::mysql::passwd')
-  $nova_passwd     = hiera('profile::nova::passwd')
   $keystone_passwd = hiera('profile::keystone::passwd')
 
   class { '::neutron':
-    allow_overlapping_ips => true,
     rabbit_user           => 'neutron',
     rabbit_password       => $rabbit_passwd,
+    allow_overlapping_ips => true,
+    core_plugin           => 'ml2',
+    service_plugins       => [
+      'neutron.services.l3_router.l3_router_plugin.L3RouterPlugin',
+      'neutron.services.loadbalancer.plugin.LoadBalancerPlugin',
+      'neutron.services.metering.metering_plugin.MeteringPlugin',
+    ],
   }
 
   class { '::neutron::server':
@@ -20,27 +25,30 @@ class profile::neutron {
     sync_db             => true,
   }
 
-  class { '::neutron::server::notifications':
-    nova_admin_password    => 'ezxMTZZiqUBWBbdjaW3sqAvHUFs7',
-    nova_region_name       => 'us-test-1',
-    nova_admin_auth_url    => "http://${facts['networking']['ip']}:5000/v2.0",
-    nova_admin_tenant_name => 'openstack',
-    nova_admin_username    => 'admin',
-  }
-
+  class { '::neutron::client': }
+  class { '::neutron::quota': }
   class { '::neutron::agents::dhcp': }
   class { '::neutron::agents::l3': }
-
-  class { '::neutron::agents::ml2::ovs':
-    local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
-    enable_tunneling => true,
+  class { '::neutron::agents::lbaas':
+    device_driver => 'neutron_lbaas.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver',
   }
 
+  class { '::neutron::agents::ml2::ovs':
+    enable_tunneling => true,
+    local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
+    tunnel_types     => ['vxlan'],
+  }
   class { '::neutron::plugins::ml2':
     type_drivers         => ['vxlan'],
     tenant_network_types => ['vxlan'],
-    vxlan_group          => '239.1.1.1',
-    mechanism_drivers    => ['openvswitch'],
-    vni_ranges           => ['0:300'],
+    mechanism_drivers    => ['openvswitch']
+  }
+
+  class { '::neutron::server::notifications':
+    nova_admin_password    => $keystone_passwd,
+    nova_region_name       => 'us-test-1',
+    nova_admin_auth_url    => "http://${facts['networking']['ip']}:35357/v2.0",
+    nova_admin_tenant_name => 'openstack',
+    nova_admin_username    => 'admin',
   }
 }
