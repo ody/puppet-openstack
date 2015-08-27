@@ -16,3 +16,4 @@ mod 'epel',             :git => 'https://github.com/stahnma/puppet-module-epel.g
 mod 'staging',          :git => 'https://github.com/nanliu/puppet-staging.git'
 mod 'puppetdb',         :git => 'https://github.com/puppetlabs/puppetlabs-puppetdb'
 mod 'firewall',         :git => 'https://github.com/puppetlabs/puppetlabs-firewall.git'
+mod 'network',          :git => 'https://github.com/puppet-community/puppet-network.git'
