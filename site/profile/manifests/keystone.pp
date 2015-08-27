@@ -8,11 +8,12 @@ class profile::keystone(
   $rabbit_passwd = hiera('profile::rabbitmq::passwd')
   $db_passwd     = hiera('profile::mysql::passwd')
 
-  #class { '::openstack_extras::auth_file':
-  #  password    => $passwd,
-  #  region_name => 'us-test-1',
-  #  auth_url    => 'http://127.0.0.1:5000/v3/',
-  #}
+  class { '::openstack_extras::auth_file':
+    password    => $passwd,
+    region_name => 'us-test-1',
+    auth_url    => 'http://127.0.0.1:5000/v3/',
+    path        => '/root/admin-openrc.sh',
+  }
 
   class { '::keystone':
     database_connection => "mysql://keystone:${db_passwd}@127.0.0.1/keystone",
