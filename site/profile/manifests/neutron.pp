@@ -18,8 +18,8 @@ class profile::neutron {
   }
 
   class { '::neutron::plugins::ml2':
-    type_drivers         => ['vxlan', 'flat'],
-    tenant_network_types => ['vxlan'],
+    type_drivers         => [ 'flat', 'vlan', 'gre', 'vxlan' ],
+    tenant_network_types => ['gre'],
     mechanism_drivers    => ['openvswitch']
   }
 }
