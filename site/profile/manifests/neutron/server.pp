@@ -38,6 +38,11 @@ class profile::neutron::server {
     require => Class['::neutron::agents::ml2::ovs'],
   }
 
+  vs_bridge { 'br-ex':
+    external_ids => 'bridge-id=br-ex',
+    require      => Vs_port['ens34'],
+  }
+
   class { '::neutron::server::notifications':
     nova_admin_password    => $keystone_passwd,
     nova_region_name       => 'us-test-1',
