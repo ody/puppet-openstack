@@ -14,14 +14,12 @@ class profile::rabbitmq($passwd) {
   }
 
   rabbitmq_vhost { '/':
-    provider => 'rabbitmqctl',
-    require  => Class['rabbitmq'],
+    ensure  => present,
+    require => Class['rabbitmq'],
   }
 
   rabbitmq_user { ['nova', 'keystone', 'neutron']:
-    admin    => true,
     password => $passwd,
-    provider => 'rabbitmqctl',
     require  => Class['rabbitmq'],
   }
 
@@ -29,7 +27,6 @@ class profile::rabbitmq($passwd) {
     configure_permission => '.*',
     write_permission     => '.*',
     read_permission      => '.*',
-    provider             => 'rabbitmqctl',
     require              => Class['rabbitmq'],
   }
 }
