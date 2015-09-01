@@ -30,7 +30,7 @@ class profile::neutron::server {
     local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
     tunnel_types     => ['vxlan'],
     bridge_mappings  => ['external:br-ex'],
-    bridge_uplinks   => ['ens34'],
+    bridge_uplinks   => ['br-ex:ens34'],
   }
 
   class { '::neutron::server::notifications':
