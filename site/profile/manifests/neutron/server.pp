@@ -28,7 +28,7 @@ class profile::neutron::server {
   class { '::neutron::agents::ml2::ovs':
     enable_tunneling => true,
     local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
-    tunnel_types     => ['vxlan'],
+    tunnel_types     => ['gre'],
     bridge_mappings  => ['external:br-ex'],
     bridge_uplinks   => ['br-ex:ens34'],
   }
