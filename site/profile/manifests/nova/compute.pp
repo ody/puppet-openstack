@@ -28,6 +28,6 @@ class profile::nova::compute {
     neutron_admin_password => 'ezxMTZZiqUBWBbdjaW3sqAvHUFs7',
     neutron_url            => 'http://192.168.10.3:9696',
     neutron_region_name    => 'us-test-1',
-    neutron_admin_auth_url => 'http://192.168.11.184:35357/v2.0',
+    neutron_admin_auth_url => 'http://192.168.11.189:35357/v2.0',
   }
 }
