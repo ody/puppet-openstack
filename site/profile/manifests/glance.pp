@@ -18,5 +18,11 @@ class profile::glance {
     keystone_password   => $ks_passwd,
   }
 
+  firewall { '100 allow glance access':
+    dport  => ['9292'],
+    proto  => 'tcp',
+    action => accept,
+  }
+
   include('::glance::backend::file')
 }

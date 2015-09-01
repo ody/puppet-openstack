@@ -9,7 +9,7 @@ class profile::rabbitmq($passwd) {
 
   firewall { '100 allow rabbitmq access':
     dport  => ['5672'],
-    proto  => ['udp', 'tcp'],
+    proto  => 'tcp',
     action => accept,
   }
 

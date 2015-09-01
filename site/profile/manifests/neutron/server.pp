@@ -40,4 +40,15 @@ class profile::neutron::server {
     nova_admin_tenant_name => 'openstack',
     nova_admin_username    => 'admin',
   }
+
+  firewall { '100 allow admin access':
+    dport  => ['35357'],
+    proto  => 'tcp',
+    action => accept,
+  }
+  firewall { '100 allow neutron access':
+    dport  => ['9696'],
+    proto  => 'tcp',
+    action => accept,
+  }
 }
