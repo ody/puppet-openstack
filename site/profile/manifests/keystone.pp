@@ -11,7 +11,7 @@ class profile::keystone(
   class { '::openstack_extras::auth_file':
     password    => $passwd,
     region_name => 'us-test-1',
-    auth_url    => 'http://127.0.0.1:5000/v3/',
+    auth_url    => 'http://127.0.0.1:5000/v2.0/',
     path        => '/root/admin-openrc.sh',
   }
 
@@ -58,5 +58,11 @@ class profile::keystone(
       admin_url    => "http://${facts['networking']['ip']}:9696",
       internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:9696",
     ;
+  }
+
+  firewall { '100 allow keystone admin access':
+    dport  => ['35357'],
+    proto  => 'tcp',
+    action => accept,
   }
 }
