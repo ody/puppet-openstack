@@ -9,6 +9,7 @@ class profile::nova::compute {
     rabbit_password => $rabbit_passwd,
     rabbit_host     => 'megacon1.localdomain',
     image_service   => 'nova.image.glance.GlanceImageService',
+    verbose         => true,
   }
 
   class { '::nova::compute': vnc_enabled => true, }

@@ -30,17 +30,7 @@ class profile::neutron::server {
     local_ip         => $facts['networking']['interfaces']['ens33']['ip'],
     tunnel_types     => ['vxlan'],
     bridge_mappings  => ['external:br-ex'],
-  }
-
-  vs_port { 'ens34':
-    ensure  => present,
-    bridge  => 'br-ex',
-    require => Class['::neutron::agents::ml2::ovs'],
-  }
-
-  vs_bridge { 'br-ex':
-    external_ids => 'bridge-id=br-ex',
-    require      => Vs_port['ens34'],
+    bridge_uplinks   => ['ens34'],
   }
 
   class { '::neutron::server::notifications':

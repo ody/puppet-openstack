@@ -11,6 +11,7 @@ class profile::nova {
     rabbit_userid       => 'nova',
     rabbit_password     => $rabbit_passwd,
     image_service       => 'nova.image.glance.GlanceImageService',
+    verbose             => true,
   }
 
   class { '::nova::api':
