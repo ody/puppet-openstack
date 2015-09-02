@@ -26,9 +26,9 @@ class profile::keystone(
   include('::keystone::cron::token_flush')
 
   class { '::keystone::endpoint':
-    public_url     => "http://${facts['networking']['ip']}:5000",
-    admin_url      => "http://${facts['networking']['ip']}:35357",
+    public_url     => "http://${facts['networking']['interfaces']['ens32']['ip']}:5000",
     internal_url   => "http://${facts['networking']['interfaces']['ens33']['ip']}:5000",
+    admin_url      => "http://${facts['networking']['interfaces']['ens34']['ip']}:35357",
     region         => 'us-test-1',
     default_domain => 'admin',
   }
@@ -44,24 +44,29 @@ class profile::keystone(
       region   => 'us-test-1',
     ;
     '::nova::keystone::auth':
-      public_url   => "http://${facts['networking']['ip']}:8774/v2/%(tenant_id)s",
-      admin_url    => "http://${facts['networking']['ip']}:8774/v2/%(tenant_id)s",
+      public_url   => "http://${facts['networking']['interfaces']['ens32']['ip']}:8774/v2/%(tenant_id)s",
       internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:8774/v2/%(tenant_id)s",
+      admin_url    => "http://${facts['networking']['interfaces']['ens34']['ip']}:8774/v2/%(tenant_id)s",
     ;
     '::glance::keystone::auth':
-      public_url   => "http://${facts['networking']['ip']}:9292",
-      admin_url    => "http://${facts['networking']['ip']}:9292",
+      public_url   => "http://${facts['networking']['interfaces']['ens32']['ip']}:9292",
       internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:9292",
+      admin_url    => "http://${facts['networking']['interfaces']['ens34']['ip']}:9292",
     ;
     '::neutron::keystone::auth':
-      public_url   => "http://${facts['networking']['ip']}:9696",
-      admin_url    => "http://${facts['networking']['ip']}:9696",
+      public_url   => "http://${facts['networking']['interfaces']['ens32']['ip']}:9696",
       internal_url => "http://${facts['networking']['interfaces']['ens33']['ip']}:9696",
+      admin_url    => "http://${facts['networking']['interfaces']['ens34']['ip']}:9696",
     ;
   }
 
   firewall { '100 allow keystone admin access':
     dport  => ['35357'],
+    proto  => 'tcp',
+    action => accept,
+  }
+  firewall { '100 allow keystone access':
+    dport  => ['5000'],
     proto  => 'tcp',
     action => accept,
   }

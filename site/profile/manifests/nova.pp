@@ -16,8 +16,8 @@ class profile::nova {
 
   class { '::nova::api':
     admin_password => $keystone_passwd,
-    auth_uri       => "http://${facts['networking']['ip']}:5000",
-    identity_uri   => "http://${facts['networking']['ip']}:35357",
+    auth_uri       => "http://${facts['networking']['interfaces']['ens33']['ip']}:5000",
+    identity_uri   => "http://${facts['networking']['interfaces']['ens34']['ip']}:35357",
     osapi_v3       => false,
   }
 
@@ -28,4 +28,17 @@ class profile::nova {
   include('::nova::client')
   include('::nova::scheduler')
   include('::nova::vncproxy')
+
+  firewall { '100 allow nova access':
+    dport  => ['8774'],
+    proto  => 'tcp',
+    action => accept,
+  }
+
+  class { '::nova::network::neutron':
+    neutron_admin_password => 'ezxMTZZiqUBWBbdjaW3sqAvHUFs7',
+    neutron_url            => 'http://192.168.55.3:9696',
+    neutron_region_name    => 'us-test-1',
+    neutron_admin_auth_url => 'http://192.168.77.3:35357/v2.0',
+  }
 }
