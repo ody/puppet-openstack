@@ -16,6 +16,7 @@ class profile::nova::compute {
   class { '::nova::compute':
     vnc_enabled => true,
     virtio_nic  => true,
+    enabled     => true,
   }
 
   include('::nova::compute::neutron')

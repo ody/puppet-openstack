@@ -19,15 +19,17 @@ class profile::nova {
     auth_uri       => "http://${facts['networking']['interfaces']['ens33']['ip']}:5000",
     identity_uri   => "http://${facts['networking']['interfaces']['ens34']['ip']}:35357",
     osapi_v3       => false,
+    enabled        => true,
   }
 
-  include('::nova::cert')
-  include('::nova::conductor')
-  include('::nova::consoleauth')
+  class { '::nova::cert':        enabled => true, }
+  class { '::nova::conductor':   enabled => true, }
+  class { '::nova::consoleauth': enabled => true, }
+  class { '::nova::scheduler':   enabled => true, }
+  class { '::nova::vncproxy':    enabled => true, }
+
   include('::nova::cron::archive_deleted_rows')
   include('::nova::client')
-  include('::nova::scheduler')
-  include('::nova::vncproxy')
 
   firewall { '100 allow nova access':
     dport  => ['8774'],
