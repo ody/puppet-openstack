@@ -44,4 +44,9 @@ class profile::neutron::server {
     proto  => 'tcp',
     action => accept,
   }
+
+  sysctl::value { 'net.ipv4.ip_forward':             value => '1' }
+  sysctl::value { 'net.ipv4.conf.all.rp_filter':     value => '0' }
+  sysctl::value { 'net.ipv4.conf.default.rp_filter': value => '0' }
+
 }
