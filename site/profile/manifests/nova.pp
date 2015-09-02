@@ -36,7 +36,7 @@ class profile::nova {
   }
 
   class { '::nova::network::neutron':
-    neutron_admin_password => 'ezxMTZZiqUBWBbdjaW3sqAvHUFs7',
+    neutron_admin_password => $keystone_passwd,
     neutron_url            => 'http://192.168.55.3:9696',
     neutron_region_name    => 'us-test-1',
     neutron_admin_auth_url => 'http://192.168.77.3:35357/v2.0',
