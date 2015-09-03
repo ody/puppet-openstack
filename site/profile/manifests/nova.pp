@@ -15,11 +15,12 @@ class profile::nova {
   }
 
   class { '::nova::api':
-    admin_password => $keystone_passwd,
-    auth_uri       => "http://${facts['networking']['interfaces']['ens33']['ip']}:5000",
-    identity_uri   => "http://${facts['networking']['interfaces']['ens34']['ip']}:35357",
-    osapi_v3       => false,
-    enabled        => true,
+    admin_password                       => $keystone_passwd,
+    auth_uri                             => "http://${facts['networking']['interfaces']['ens33']['ip']}:5000",
+    identity_uri                         => "http://${facts['networking']['interfaces']['ens34']['ip']}:35357",
+    osapi_v3                             => false,
+    enabled                              => true,
+    neutron_metadata_proxy_shared_secret => 'oUnXsYfhEsY6TppbKj7C2K8oYfWp9yvR'
   }
 
   class { '::nova::cert':        enabled => true, }

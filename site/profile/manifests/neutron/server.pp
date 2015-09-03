@@ -39,6 +39,15 @@ class profile::neutron::server {
     nova_admin_auth_url => "http://${facts['networking']['interfaces']['ens34']['ip']}:35357/v2.0",
   }
 
+  class { '::neutron::agents::metadata':
+    auth_password => $keystone_passwd,
+    shared_secret => 'oUnXsYfhEsY6TppbKj7C2K8oYfWp9yvR',
+    enabled       => true,
+    auth_url      => "http://${facts['networking']['interfaces']['ens34']['ip']}:35357/v2.0",
+    auth_region   => 'us-test-1',
+  }
+
+
   firewall { '100 allow neutron access':
     dport  => ['9696'],
     proto  => 'tcp',
