@@ -19,7 +19,13 @@ class profile::neutron {
 
   class { '::neutron::plugins::ml2':
     type_drivers         => [ 'flat', 'vlan', 'gre', 'vxlan' ],
-    tenant_network_types => ['gre'],
+    tenant_network_types => ['vxlan'],
     mechanism_drivers    => ['openvswitch']
+  }
+
+  firewall { '100 allow vxlan tunnel access':
+    dport  => ['4789'],
+    proto  => 'udp',
+    action => accept,
   }
 }
