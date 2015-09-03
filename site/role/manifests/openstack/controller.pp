@@ -16,5 +16,6 @@ class role::openstack::controller {
 
   Class[['profile::puppet', 'profile::puppet::db']] -> Class['profile::common'] ->
   Class[['profile::mysql', 'profile::rabbitmq']] ->
-  Class['profile::keystone'] -> Class[['profile::glance', 'profile::nova', 'profile::neutron::server']]
+  Class['profile::keystone'] -> Class[['profile::glance', 'profile::nova']] ->
+  Class['profile::neutron::server']
 }
