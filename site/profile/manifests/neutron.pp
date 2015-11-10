@@ -7,7 +7,7 @@ class profile::neutron {
   class { '::neutron':
     rabbit_user           => 'neutron',
     rabbit_password       => $rabbit_passwd,
-    rabbit_host           => 'megacon1.localdomain',
+    rabbit_host           => 'control1.localdomain',
     allow_overlapping_ips => true,
     core_plugin           => 'ml2',
     service_plugins       => [
