@@ -8,7 +8,7 @@ class role::openstack::controller {
     'profile::rabbitmq',
     'profile::keystone',
     'profile::glance',
-    'profile::nova',
+    'profile::nova::server',
     'profile::neutron::server',
     'profile::puppet',
     'profile::puppet::db',
@@ -16,6 +16,6 @@ class role::openstack::controller {
 
   Class[['profile::puppet', 'profile::puppet::db']] -> Class['profile::common'] ->
   Class[['profile::mysql', 'profile::rabbitmq']] ->
-  Class['profile::keystone'] -> Class[['profile::glance', 'profile::nova']] ->
+  Class['profile::keystone'] -> Class[['profile::glance', 'profile::nova::server']] ->
   Class['profile::neutron::server']
 }
