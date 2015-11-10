@@ -1,4 +1,4 @@
-node 'megacon1.localdomain' {
+node 'control1.localdomain' {
 
   include('::role::openstack::controller')
 }
