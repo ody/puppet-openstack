@@ -1,7 +1,7 @@
 mod 'keystone',         :git => 'https://github.com/openstack/puppet-keystone.git'
 mod 'nova',             :git => 'https://github.com/openstack/puppet-nova.git'
 mod 'cinder',           :git => 'https://github.com/openstack/puppet-cinder.git'
-mod 'glance',           :git => 'https://github.com/openstack/puppet-glance.git'
+mod 'glance',           :git => 'https://github.com/ody/puppet-glance.git',                :ref => 'fix_facter_array'
 mod 'neutron',          :git => 'https://github.com/openstack/puppet-neutron.git'
 mod 'openstacklib',     :git => 'https://github.com/openstack/puppet-openstacklib.git'
 mod 'openstack_extras', :git => 'https://github.com/openstack/puppet-openstack_extras.git'
