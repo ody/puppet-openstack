@@ -3,7 +3,6 @@
 class profile::nova::server {
 
   $rabbit_passwd   = hiera('profile::rabbitmq::passwd')
-  $db_passwd       = hiera('profile::mysql::passwd')
   $keystone_passwd = hiera('profile::keystone::passwd')
 
   include('::profile::nova')
