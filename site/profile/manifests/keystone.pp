@@ -33,44 +33,41 @@ class profile::keystone(
     default_domain => 'admin',
   }
 
-  #class { '::keystone::roles::admin':
-  #  email    => 'admin@example.com',
-  #  password => $passwd,
-  #}
+  class { '::keystone::roles::admin':
+    email    => 'admin@example.com',
+    password => $passwd,
+  }
 
-  keystone_domain { 'admin':
+  keystone_domain { 'admin_v3':
     ensure  => present,
     enabled => true,
   }
-  keystone_domain { 'services':
+  keystone_domain { 'service_v3':
     ensure  => present,
     enabled => true,
   }
 
-  keystone_tenant { 'openstack::admin':
+  keystone_tenant { 'openstack_v3::admin_v3':
     ensure      => present,
     enabled     => true,
     description => 'v3 admin tenant',
-    domain      => 'admin',
   }
-  keystone_tenant { 'services::services':
+  keystone_tenant { 'services_v3::service_v3':
     ensure      => present,
     enabled     => true,
     description => 'v3 tenant for the openstack services',
-    domain      => 'services',
   }
 
-  keystone_user { 'admin::admin':
+  keystone_user { 'admin_v3::admin_v3':
     ensure   => present,
     enabled  => true,
     email    => 'admin@example.com',
     password => $passwd,
-    domain   => 'admin',
   }
-  keystone_user_role { 'admin@openstack':
+  keystone_user_role { 'admin_v3@openstack_v3':
     ensure         => present,
-    project_domain => 'admin',
-    user_domain    => 'admin',
+    project_domain => 'admin_v3',
+    user_domain    => 'admin_v3',
     roles          => ['admin'],
   }
 
